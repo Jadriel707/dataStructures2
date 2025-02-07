@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 class Demo {
     private JFrame frame;
-    protected DataStructureDisplay active;
+    protected JPanel active;
     public static final int SCREEN_WIDTH = 1200;
     public static final int SCREEN_HEIGHT = 1000;
     
@@ -13,12 +13,15 @@ class Demo {
     public Demo() {
         LinkedListDisplay linkedDemo=new LinkedListDisplay("Miku Miku oo ee oo");
         StackDisplay stackDemo=new StackDisplay("Stacks");
-        active=stackDemo;
+        active=linkedDemo;
         frame=new JFrame("Data Structures Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
         JPanel menuPanel=new JPanel();
+        menuPanel.setBackground(Color.lightGray);
         JButton stackButton=new JButton("Stack Demo");
+        stackButton.setForeground(Color.BLACK);
+        stackButton.setBackground(Color.WHITE);
         stackButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -28,11 +31,12 @@ class Demo {
                 frame.add(active, BorderLayout.CENTER);
                 frame.revalidate();
                 frame.repaint();
-                System.out.println("AAAAAAAAAAAA");
             }
 
         });
         JButton linkedButton=new JButton("LinkedList Demo");
+        linkedButton.setForeground(Color.BLACK);
+        linkedButton.setBackground(Color.WHITE);
         linkedButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,7 +46,6 @@ class Demo {
                 frame.add(active, BorderLayout.CENTER);
                 frame.revalidate();
                 frame.repaint();
-                System.out.println("BBBBBBBBBBBBBBBBB");
             }
 
         });

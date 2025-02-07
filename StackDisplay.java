@@ -11,7 +11,6 @@ public class StackDisplay extends DataStructureDisplay {
     private HashMap<Integer, Visual> visuals;
 
     private JButton addButton;
-    private JButton reorderButton;
     private JTextField listValue;
 
     public StackDisplay(String title) {
@@ -23,6 +22,8 @@ public class StackDisplay extends DataStructureDisplay {
         
         listValue = new JTextField(8);
         addButton = new JButton("Add");
+        addButton.setForeground(Color.BLACK);
+        addButton.setBackground(Color.WHITE);
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,15 +31,15 @@ public class StackDisplay extends DataStructureDisplay {
                     list.push(listValue.getText()); 
                     int i=-1;
                     for(String string : list) {i++;}
-                    visuals.put(i, new Visual(Demo.SCREEN_WIDTH/2-150, 850-(i*30), 300,30)); 
+                    visuals.put(i, new Visual(Demo.SCREEN_WIDTH/2-150, 650-(i*30), 300,30)); 
                     renderer.repaint();     
                 } 
             }
         });
-        reorderButton= new JButton("Reorder");
+    
         gui.add(addButton);
         gui.add(listValue);
-        gui.add(reorderButton);
+        gui.setBackground(Color.lightGray);      
 
         
 
@@ -61,7 +62,12 @@ public class StackDisplay extends DataStructureDisplay {
                     g.fillRect(v.x, v.y, v.w, v.h);
                     g.setColor(v.borderColor);
                     g.drawRect(v.x, v.y, v.w, v.h);
-                    g.drawString(string, v.x+10, v.y+30);
+                    g.drawString(string, (v.x+((v.w/2) - (g.getFontMetrics().stringWidth(string) / 2))), v.y+26);
+                    
+                    if(visuals.get(i+1)==null) {
+                        g.setColor(Color.red);
+                        g.drawString("TOP", (v.x+((v.w/2) - (g.getFontMetrics().stringWidth("TOP") / 2))), v.y-10);
+                    }
                 }
                 i++;
             }

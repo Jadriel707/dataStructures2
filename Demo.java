@@ -30,6 +30,7 @@ class Demo {
                 frame.add(menuPanel, BorderLayout.PAGE_START);
                 frame.add(active, BorderLayout.CENTER);
                 frame.revalidate();
+                
                 frame.repaint();
             }
 
@@ -57,6 +58,7 @@ class Demo {
         frame.setLayout(new BorderLayout());
         frame.add(menuPanel, BorderLayout.PAGE_START);
         frame.add(active, BorderLayout.CENTER);
+        frame.setResizable(false);
         frame.setVisible(true);
     }
 

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
+
 public class LinkedListDisplay extends DataStructureDisplay implements MouseListener, MouseMotionListener {
     private LinkedList<String> list;
     private DrawPanel renderer;
@@ -25,6 +27,7 @@ public class LinkedListDisplay extends DataStructureDisplay implements MouseList
     private boolean holding;
     private Visual selected;
     private int mouseX, mouseY;
+    
 
     private BufferedImage bg_image;
 
@@ -161,18 +164,39 @@ public class LinkedListDisplay extends DataStructureDisplay implements MouseList
 
     @Override
     public void mousePressed(MouseEvent e) {
-        holding=true;
-        for(Visual v: visuals.values()) {
-            if(Cursor.insideRect(v)){
-                selected=v;
-                mouseX = Cursor.x()-v.x;
-                mouseY = Cursor.y()-v.y;
-                renderer.repaint();  
-                return;
-                
-            }
-        }    
-        renderer.repaint();    
+        if(e.getButton()==1) {
+            holding=true;
+            for(Visual v: visuals.values()) {
+                if(Cursor.insideRect(v)){
+                    selected=v;
+                    mouseX = Cursor.x()-v.x;
+                    mouseY = Cursor.y()-v.y;
+                    renderer.repaint();  
+                    return;
+
+                }
+            }    
+            renderer.repaint();  
+        } else if(e.getButton()==3) {
+            System.out.println("RIGHT CLICK!!!!!!!");
+            renderer.removeAll();
+
+            GUIPanel rightMenu=new GUIPanel();
+            rightMenu.setLayout(new BoxLayout(rightMenu, BoxLayout.Y_AXIS));
+            rightMenu.setBounds(Cursor.x(),Cursor.y(),120,100);
+
+            JButton tb= new JButton("Test");
+            tb.setForeground(Color.BLACK);
+            tb.setBackground(Color.WHITE);
+            tb.setBounds(0,0,120,25);
+
+           
+            rightMenu.add(tb);
+            renderer.add(rightMenu);
+            renderer.repaint();
+           
+            
+        }  
     }
 
     @Override

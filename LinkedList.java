@@ -20,6 +20,34 @@ public class LinkedList<T> implements Iterable<T> {
         
     }
 
+    public int size() {
+        if(head!=null) {
+            int size=1;
+            Node<T> node=head;
+            while(node.next!=null) {
+                node=node.next;
+                size++;
+            }
+            return size;
+        }
+
+        return 0;
+    }
+
+    public void remove(int index) {
+        if((index>-1&&index<size())&&head!=null) {
+            Node<T> node=head;
+            for(int k=0;k<index;k++) {
+                node=node.next;
+            }
+            if(node.next.next==null)
+                node.next=null;
+            else
+                node.next=node.next.next;
+        }
+       
+    }
+
     // public void add(T value, int index) {
     //     if(head!=null) {
     //         Node<T> node=head;
@@ -114,10 +142,19 @@ public class LinkedList<T> implements Iterable<T> {
         words.add("Two");
         words.add("Three");
         words.add("Four");
+        words.add("Five");
 
         for(String word: words) {
             System.out.println(word);
         }
+
+        System.out.println(words.size());
+
+        words.remove(2);
+        for(String word: words) {
+            System.out.println(word);
+        }
+        System.out.println(words.size());
 
     }
 

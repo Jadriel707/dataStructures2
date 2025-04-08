@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -142,6 +143,13 @@ public class LinkedListDisplay extends DataStructureDisplay implements MouseList
     }
 
     class GUIPanel extends JPanel {}
+    class NodePanel extends JPanel {
+        private int nodeIndex;
+
+        public NodePanel(int i) {
+            nodeIndex=i;
+        }
+    }
 
     @Override
     public void mouseDragged(MouseEvent e) {
@@ -165,6 +173,7 @@ public class LinkedListDisplay extends DataStructureDisplay implements MouseList
     @Override
     public void mousePressed(MouseEvent e) {
         if(e.getButton()==1) {
+            renderer.removeAll();
             holding=true;
             for(Visual v: visuals.values()) {
                 if(Cursor.insideRect(v)){
@@ -180,22 +189,37 @@ public class LinkedListDisplay extends DataStructureDisplay implements MouseList
         } else if(e.getButton()==3) {
             System.out.println("RIGHT CLICK!!!!!!!");
             renderer.removeAll();
+            int nodeIndex=0;
+            for(Visual v: visuals.values()) {
+                if(!Cursor.insideRect(v)){
+                    nodeIndex++;
+                } else {
+                    break;
+                }
+            }
+            if(!(nodeIndex>=visuals.size())) {
+                NodePanel rightMenu=new NodePanel(nodeIndex);      
+                rightMenu.setLayout(new BoxLayout(rightMenu, BoxLayout.Y_AXIS));
+                rightMenu.setBounds(Cursor.x(),Cursor.y(),120,100);
 
-            GUIPanel rightMenu=new GUIPanel();
-            rightMenu.setLayout(new BoxLayout(rightMenu, BoxLayout.Y_AXIS));
-            rightMenu.setBounds(Cursor.x(),Cursor.y(),120,100);
-
-            JButton tb= new JButton("Test");
-            tb.setForeground(Color.BLACK);
-            tb.setBackground(Color.WHITE);
-            tb.setBounds(0,0,120,25);
-
-           
-            rightMenu.add(tb);
-            renderer.add(rightMenu);
+                JButton tb= new JButton("Test");
+                tb.setForeground(Color.BLACK);
+                tb.setBackground(Color.WHITE);
+                tb.setBounds(0,0,120,25);
+                tb.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        list.remove(rightMenu.nodeIndex);
+                        visuals.remove(rightMenu.nodeIndex);
+                    
+                        renderer.repaint();
+                    }
+                });
+                
+                rightMenu.add(tb);
+                renderer.add(rightMenu);
+            }
             renderer.repaint();
-           
-            
         }  
     }
 
